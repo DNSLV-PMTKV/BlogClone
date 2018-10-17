@@ -33,6 +33,12 @@ class CreatePostView(LoginRequiredMixin, CreateView):
     form_class = PostForm
     model = Post
 
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.author = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
 
 class UpdatePostView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
