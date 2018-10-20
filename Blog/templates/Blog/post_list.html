@@ -2,17 +2,19 @@
 {% block content %}
 
 <body>
-    <div class="centerstage">
-        {% for post in post_list %}
-        <div class="post">
-            <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-            <div class="date">
-                <p>Published on: {{post.published_date|date:"d-m-Y"}}</p>
-                <p>Created by: {{post.author}}</p>
-            </div>
+    <div class="container">
+        <div class="row">
+            {% for post in post_list %}
+            <div class="col-4 data">
+                <h1><a href="{% url 'post_detail' pk=post.pk %}">
+                        {{ post.title }}
+                        <p>Published on: {{post.published_date|date:"d-m-Y"}}</p>
+                        <p>Created by: {{post.author}}</p>
+                    </a></h1>
 
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </body>
 

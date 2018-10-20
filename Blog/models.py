@@ -18,7 +18,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
     text = models.TextField()
-    published_date = models.DateTimeField(default=timezone.now())
+    published_date = models.DateTimeField(default=timezone.now)
 
     def publish(self):
         self.published_date = timezone.new()
