@@ -13,7 +13,7 @@ from .forms import PostForm, UserForm, UserProfileInfoFrom
 
 
 class AboutView(TemplateView):
-    template_name = 'about.html'
+    template_name = 'Blog/about.html'
 
 
 class PostListView(ListView):
