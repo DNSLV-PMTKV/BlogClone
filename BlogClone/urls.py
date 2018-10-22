@@ -18,11 +18,11 @@ from django.urls import path, include
 # from django.contrib.auth import views
 
 from Blog import views
+from accounts import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Blog.urls')),
-    path('login/', views.user_login, name='user_login'),
-    path('register/', views.register, name='register'),
-    path('logout/', views.user_logout, name='logout'),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]

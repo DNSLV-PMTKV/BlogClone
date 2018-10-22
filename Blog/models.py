@@ -21,7 +21,7 @@ class Post(models.Model):
     published_date = models.DateTimeField(default=timezone.now)
 
     def publish(self):
-        self.published_date = timezone.new()
+        self.published_date = timezone.now()
         self.save()
 
     def get_absolute_url(self):
