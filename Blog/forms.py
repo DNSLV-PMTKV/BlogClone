@@ -1,14 +1,18 @@
 from django import forms
-from django.contrib.auth.models import User
-from .models import Post
+from . import models
 
 
 class PostForm(forms.ModelForm):
-    class Meta():
-        model = Post
-        fields = ('title', 'text')
+    class Meta:
+        fields = ("text", "group")
+        model = models.Post
 
-        widgets = {
-            'title': forms.TextInput(attrs={'class': 'text_input_text'}),
-            'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
-        }
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields["group"].queryset = (
+                models.Group.objects.filter(
+                    pk__in=user.groups.values_list("group__pk")
+                )
+            )

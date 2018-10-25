@@ -22,7 +22,8 @@ from accounts import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Blog.urls')),
+    path('', include('Blog.urls', namespace='blog')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('groups/', include("groups.urls", namespace="groups")),
 ]

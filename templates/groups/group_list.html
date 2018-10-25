@@ -2,15 +2,15 @@
 {% block pregroup %}
 <div class="col-md-4">
     <div class="content">
+        <h2>Groups</h2>
+        <p>Welcome to the groups page!</p>
         {% if user.is_authenticated %}
         <h2>Welcome Back!
-            <a href="{% url 'blog:for_user' username=user.name %}">
+            <a href="{% url 'blog:for_user' username=user.username %}">
                 @{{user.username}}
             </a>
         </h2>
         {% endif %}
-        <h2>Groups</h2>
-        <p>Welcome to the groups page!</p>
     </div>
     {% if user.is_authenticated %}
     <a href="{% url 'groups:create' %}" class='btn btn-warning'>Create New Group</a>
@@ -22,22 +22,23 @@
 <div class="col-md-8">
     <div class="list-group">
         {% for group in object_list %}
-        <a href="{% url 'groups:single' slug=group.slug }%">
+        <a href="{% url 'groups:single' slug=group.slug %}">
             <h3>{{group.name}}</h3>
-            <div class="container-fluid">
-                {{group.description_html|safe}}
-                <div class="row">
-                    <div class="col-md-4">
-                        <span>{{group.members.count}}</span>
-                        member{{group.members.count|pluralize}}
-                    </div>
-                    <div class="col-md-4">
-                        <span>{{group.posts.count}}</span>
-                        post{{group.posts.count|pluralize}}
-                    </div>
+        </a>
+        <div class="container-fluid">
+            {{group.description_html|safe}}
+            <div class="row">
+                <div class="col-md-4">
+                    <span>{{group.members.count}}</span>
+                    member{{group.members.count|pluralize}}
+                </div>
+                <div class="col-md-4">
+                    <span>{{group.posts.count}}</span>
+                    post{{group.posts.count|pluralize}}
                 </div>
             </div>
-        </a>
+        </div>
+
         {% endfor %}
     </div>
 </div>

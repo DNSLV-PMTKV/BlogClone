@@ -1,16 +1,16 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends "Blog/post_base.html" %}
 
-<body>
-    <h1>New Post</h1>
-    <form class="post-form" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
-    <script>
-        var editor = new MediumEditor('.editable');
-    </script>
-</body>
+{% load bootstrap4 %}
+
+{% block post_content %}
+
+<h4>Create New Post</h4>
+<form method="POST" action="{% url 'posts:create' %}" id="postForm">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="btn btn-primary btn-large">Post</button>
+    {% endbuttons %}
+</form>
 
 {% endblock %}
