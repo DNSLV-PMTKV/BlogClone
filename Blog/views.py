@@ -11,7 +11,7 @@
 # from .forms import PostForm
 # Create your views here.
 
-from django.contrib.auth.mixins import LoginRequiredMixin,              PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 from django.http import Http404
@@ -75,22 +75,15 @@ class CreatePostView(LoginRequiredMixin, SelectRelatedMixin, generic.CreateView)
 
     def form_valid(self, form):
         self.obj = form.save(commit=False)
-        self.obj.author = self.request.user
+        self.obj.user = self.request.user
         self.obj.save()
         return super().form_valid(form)
-
-
-# class UpdatePostView(LoginRequiredMixin, UpdateView):
-#     login_url = '/login/'
-#     redirect_field_name = 'Blog/post_detail.html'
-#     form_class = PostForm
-#     model = Post
 
 
 class DeletePostView(LoginRequiredMixin, SelectRelatedMixin, generic.DeleteView):
     model = models.Post
     select_related = ("user", "group")
-    success_url = reverse_lazy("posts:all")
+    success_url = reverse_lazy("posts:post_list")
 
     def get_queryset(self):
         queryset = super().get_queryset()

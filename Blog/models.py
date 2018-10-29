@@ -12,14 +12,19 @@ from groups.models import Group
 
 class Post(models.Model):
     user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
-    # title = models.CharField(max_length=256)
-    text = models.TextField()
+    text = models.TextField(blank=False)
     text_html = models.TextField(editable=False, default='')
     published_date = models.DateTimeField(auto_now=True)
     group = models.ForeignKey(Group, related_name='posts', null=True, blank=True, on_delete=models.CASCADE)
 
+    def save(self, *args, **kwargs):
+        self.text_html = misaka.html(self.text)
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'pk': self.pk})
+        return reverse("posts:single", kwargs={
+            "username": self.user.username,
+            "pk": self.pk})
 
     class Meta():
         ordering = ['-published_date']
